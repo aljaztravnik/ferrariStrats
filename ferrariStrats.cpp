@@ -15,10 +15,10 @@ struct GrandPrix
 	std::string stringTimes[3];
 	std::vector<std::vector<int>> strats;
 	float times[3] = {0.0, 0.0, 0.0};
-	unsigned short durability[3] = {15, 25, 40};
+	unsigned short durability[3] = {15, 25, 40}; // laps
 };
 
-GrandPrix enterData(GrandPrix gp)
+void enterData(GrandPrix &gp)
 {
 	std::cout << "Enter your avg. lap times for soft, medium and hard tyres; eg. [1:43:872].\n";
 	std::getline(std::cin, gp.stringTimes[0]);
@@ -33,10 +33,9 @@ GrandPrix enterData(GrandPrix gp)
 	for(int i = 0; i < 3; i++)
 		std::cout << gp.stringTimes[i] << ' ';
 	std::cout << '\n';
-	return gp;
 }
 
-GrandPrix stringToTime(GrandPrix gp)
+void stringToTime(GrandPrix &gp)
 {
 	std::string stringFraction[3][3] = {"","",""};
 	float fraction[3][3];
@@ -71,8 +70,6 @@ GrandPrix stringToTime(GrandPrix gp)
 	std::cout << "\nTimes for tyres in fract.: ";
 	for(int i = 0; i < 3; i++)	std::cout << gp.times[i] << "  ";
 	std::cout << '\n';
-
-	return gp;
 }
 
 void reverseVector(std::vector<int> &vect, int start, int end)
@@ -87,7 +84,7 @@ void reverseVector(std::vector<int> &vect, int start, int end)
 	}
 }
 
-GrandPrix makeCombinations(GrandPrix gp) // dela (perhaps)
+void makeCombinations(GrandPrix &gp) // dela (perhaps)
 {
 	for(int i = 0; i < 3; i++)
 	{
@@ -119,10 +116,9 @@ GrandPrix makeCombinations(GrandPrix gp) // dela (perhaps)
 			std::cout << gp.strats[i][j] << ' ';
 		std::cout << '\n';
 	}
-	return gp;
 }
 
-GrandPrix getBestTime(GrandPrix gp)
+void getBestTime(GrandPrix &gp)
 {
 	for(int i = 0; i < 3; i++) // gets best time for soft, med, or hard only
 	{
@@ -185,10 +181,9 @@ GrandPrix getBestTime(GrandPrix gp)
 			gp.bestComb = i;
 		}
 	}
-	return gp;
 }
 
-GrandPrix printBestCombination(GrandPrix gp)
+void printBestCombination(GrandPrix &gp)
 {
 	std::cout << "\nThe best combination of tyres is:";
 	for(int j = 0; j < gp.strats[gp.bestComb].size(); j++)
@@ -198,7 +193,6 @@ GrandPrix printBestCombination(GrandPrix gp)
 		else std::cout << " HARD ";
 	}
 	std::cout << "\nWith the time of: " << gp.bestTime << '\n';
-	return gp;
 }
 
 int main()
@@ -207,10 +201,10 @@ int main()
 	/* time for pitstop = 23s
 	   58 laps */
 	GrandPrix gp;
-	gp = enterData(gp);
-	gp = stringToTime(gp);
-	gp = makeCombinations(gp);
-	gp = getBestTime(gp);
-	gp = printBestCombination(gp);
+	enterData(gp);
+	stringToTime(gp);
+	makeCombinations(gp);
+	getBestTime(gp);
+	printBestCombination(gp);
 	return 0;
 }
